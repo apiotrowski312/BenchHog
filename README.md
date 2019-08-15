@@ -7,7 +7,7 @@ Under development
   * [ ] Status codes (percentage of ok/error)
   * [x] average
   * [x] median
-  * [ ] percentage of times (like 50% under 1000seconds)
+  * [x] percentage of times (like 50% under 1000seconds)
 * [ ] Unit tests
 * [ ] Flags:
   * [ ] URL
