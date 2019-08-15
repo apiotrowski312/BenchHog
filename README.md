@@ -3,8 +3,8 @@
 Under development
 
 ### To do:
-* [ ] Simple but informative metrics:
-  * [ ] Status codes (percentage of ok/error)
+* [x] Simple but informative metrics:
+  * [x] Status codes (percentage of ok/error)
   * [x] average
   * [x] median
   * [x] percentage of times (like 50% under 1000seconds)
