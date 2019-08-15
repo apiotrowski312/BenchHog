@@ -11,8 +11,15 @@ func Get(url string, limitRatio chan int, wg *sync.WaitGroup, waitTime chan Meas
 	defer wg.Done()
 
 	start := time.Now()
-	http.Get(url)
+	resp, err := http.Get(url)
+
+	if err != nil {
+		// handle error
+	}
+	defer resp.Body.Close()
+
+	wasSuccess := resp.StatusCode >= 200 && resp.StatusCode <= 299
 
 	<-limitRatio
-	waitTime <- Measurement{waitTime: time.Since(start), success: true}
+	waitTime <- Measurement{waitTime: time.Since(start), success: wasSuccess}
 }

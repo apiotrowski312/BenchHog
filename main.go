@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	ratio            = 5
-	numberOfRequests = 25
+	ratio            = 25
+	numberOfRequests = 250
 )
 
 type Measurement struct {
@@ -25,7 +25,7 @@ func main() {
 	wg.Add(numberOfRequests)
 	for i := 0; i < numberOfRequests; i++ {
 		limitRatio <- 1
-		go Get("https://medvocation.develop.thebitbybit.com/api/choice/profession/", limitRatio, &wg, measurment)
+		go Get("URL", limitRatio, &wg, measurment)
 	}
 
 	wg.Wait()
