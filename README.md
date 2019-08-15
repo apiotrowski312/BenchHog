@@ -6,9 +6,9 @@ Under development
 * [ ] Simple but informative metrics:
   * [ ] Status codes (percentage of ok/error)
   * [x] average
-  * [ ] mean
-  * [ ] median
+  * [x] median
   * [ ] percentage of times (like 50% under 1000seconds)
+* [ ] Unit tests
 * [ ] Flags:
   * [ ] URL
   * [ ] number of total requests

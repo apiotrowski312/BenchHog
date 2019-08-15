@@ -2,31 +2,43 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"time"
 )
 
-// Metrics - print pretty and accurate metrics like mean time etc.
-func Metrics(waitTime chan time.Duration) {
-	results := toSlice(waitTime)
+// PrintResults - print pretty and accurate metrics like mean time etc.
+func PrintResults(results chan Measurement) {
 
-	averageTime(results)
+	times, _ := toSlice(results)
+
+	averageTime(times)
+	medianTime(times)
 }
 
-func averageTime(results []time.Duration) {
-	total := 0.0
-	for _, value := range results {
-		total += float64(value)
+func averageTime(times []int) {
+	total := 0
+	for _, value := range times {
+		total += value
 	}
 
-	average := time.Duration(total / float64(len(results)))
+	average := time.Duration(float64(total) / float64(len(times)))
 	fmt.Println("Average time:", average)
 }
 
-// toSlice - converts time.Duration channel to slice
-func toSlice(c chan time.Duration) []time.Duration {
-	s := make([]time.Duration, 0)
+func medianTime(times []int) {
+	sort.Ints(times)
+	median := time.Duration(times[len(times)/2])
+	fmt.Println("Median time:", median)
+}
+
+// toSlice - converts Measurement channel to slices
+func toSlice(c chan Measurement) ([]int, []bool) {
+	times := make([]int, 0)
+	success := make([]bool, 0)
+
 	for i := range c {
-		s = append(s, i)
+		times = append(times, int(i.waitTime))
+		success = append(success, i.success)
 	}
-	return s
+	return times, success
 }
