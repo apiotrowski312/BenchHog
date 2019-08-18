@@ -1,4 +1,4 @@
-package main
+package results
 
 import (
 	"fmt"
@@ -10,6 +10,10 @@ import (
 type Measurement struct {
 	waitTime time.Duration
 	success  bool
+}
+
+func CreateMeasurment(waitTime time.Duration, success bool) Measurement {
+	return Measurement{waitTime: waitTime, success: success}
 }
 
 // PrintResults - print pretty and accurate metrics like mean time etc.

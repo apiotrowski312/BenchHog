@@ -6,8 +6,8 @@ FILES := *.go
 
 LDFLAGS=-ldflags "-X=main.Version=$(VERSION) -X=main.Build=$(BUILD)"
 
-run:
-	@go run *.go
+run: build
+	$(BIN)/$(PROJECTNAME)
 
 build:
 	@echo "Building binary"
