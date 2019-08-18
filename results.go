@@ -6,9 +6,14 @@ import (
 	"time"
 )
 
+// Measurement - struct created to agregate all measurments
+type Measurement struct {
+	waitTime time.Duration
+	success  bool
+}
+
 // PrintResults - print pretty and accurate metrics like mean time etc.
 func PrintResults(results chan Measurement) {
-
 	times, successes := toSlice(results)
 
 	standardTimes(times)
@@ -62,7 +67,6 @@ func percentageSuccess(success []bool) {
 	fmt.Printf("%.2f%% of requests responsed with 2xx status code\n", float64(total)/float64(len(success))*100)
 }
 
-// toSlice - converts Measurement channel to slices
 func toSlice(c chan Measurement) ([]int, []bool) {
 	times := make([]int, 0)
 	success := make([]bool, 0)

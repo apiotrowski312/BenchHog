@@ -6,8 +6,8 @@ import (
 	"time"
 )
 
-// Get - simple function to Get url and collect waitTime
-func Get(url string, limitRatio chan int, wg *sync.WaitGroup, waitTime chan Measurement) {
+// Get - simple function to Get url and collect data
+func Get(url string, limitRatio chan int, wg *sync.WaitGroup, data chan Measurement) {
 	defer wg.Done()
 
 	start := time.Now()
@@ -21,5 +21,5 @@ func Get(url string, limitRatio chan int, wg *sync.WaitGroup, waitTime chan Meas
 	wasSuccess := resp.StatusCode >= 200 && resp.StatusCode <= 299
 
 	<-limitRatio
-	waitTime <- Measurement{waitTime: time.Since(start), success: wasSuccess}
+	data <- Measurement{waitTime: time.Since(start), success: wasSuccess}
 }

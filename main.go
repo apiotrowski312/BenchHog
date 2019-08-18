@@ -2,18 +2,12 @@ package main
 
 import (
 	"sync"
-	"time"
 )
 
 const (
 	ratio            = 25
 	numberOfRequests = 250
 )
-
-type Measurement struct {
-	waitTime time.Duration
-	success  bool
-}
 
 func main() {
 
