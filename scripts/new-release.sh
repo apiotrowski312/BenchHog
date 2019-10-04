@@ -1,6 +1,7 @@
 #!/bin/bash
 (
-  all_commited=$(git diff --exit-code)
+  all_commited=$(git diff --exit-code | $?)
+
   if [[ $all_commited != 0 ]]; then
     echo "Not all changes were commited"
     exit 1
