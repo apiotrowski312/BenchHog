@@ -1,9 +1,9 @@
 #!/bin/bash
 (
-  all_commited=$(git diff --exit-code | $?)
+  all_commited=$(git diff --exit-code && git diff --cached --exit-code)
 
-  if [[ $all_commited != 0 ]]; then
-    echo "Not all changes were commited"
+  if [[ -n $all_commited ]]; then
+    echo "Not all changes were commited and pushed"
     exit 1
   fi
 
