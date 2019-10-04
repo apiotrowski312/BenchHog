@@ -13,6 +13,6 @@
   read -r -p "Release title: ${release_title}? [y/N] " response
   if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
     git tag -a "v${new_tag}" -m "${release_title}"
-    git push origin "v#${new_tag}"
+    git push origin "v${new_tag}"
   fi
 )
