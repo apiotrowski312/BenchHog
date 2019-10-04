@@ -4,15 +4,34 @@ BASE := $(shell pwd)
 BIN := $(BASE)/bin
 FILES := *.go
 
-LDFLAGS=-ldflags "-X=main.Version=$(VERSION) -X=main.Build=$(BUILD)"
+GOCMD=go
+GOBUILD=$(GOCMD) build
+GOCLEAN=$(GOCMD) clean
 
-run: build
+.DEFAULT_GOAL := help
+.PHONY: help
+
+help: ## Show this help.
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+# -----------------------------------------------------------------------------
+# General
+# -----------------------------------------------------------------------------
+
+run: build ## Builds and run Benchhog.
 	$(BIN)/$(PROJECTNAME)
 
-build:
-	@echo "Building binary"
-	@go build $(LDFLAGS) -o $(BIN)/$(PROJECTNAME) $(FILES)
+build: ## Builds Benchhog to bin directory.
+	$(GOBUILD) -o $(BIN)/$(PROJECTNAME) $(FILES)
 
-clean:
-	@echo "Cleaning"
-	@rm -fr $(BIN) 2> /dev/null
+clean: ## Remove artifacts
+	$(GOCLEAN)
+	rm -fr $(BIN) 2> /dev/null
+
+# -----------------------------------------------------------------------------
+# Git
+# -----------------------------------------------------------------------------
+
+
+new-release: ## Release new version of software.
+	@./scripts/new-release.sh
