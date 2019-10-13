@@ -21,7 +21,7 @@ promtConfirmation() {
     promtConfirmation "Are you sure you want to continnue? [y/N] "
   fi
 
-  new_tag=$(grep -e '^## [0-9\.]*' CHANGELOG.md | awk '{print $2}')
+  new_tag=$(grep -e '^## [0-9\.]*' CHANGELOG.md | awk '{print $2}' | head -n 1)
   release_title="v${new_tag} release"
 
   promtConfirmation "Release title: ${release_title}? [y/N] " # TODO: change title to description
