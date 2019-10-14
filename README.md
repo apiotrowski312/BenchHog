@@ -13,6 +13,7 @@
   * [x] number of concurent requests
 * [x] Support multiple endpoints within one bench test
   * [ ] Add flag with multiple tactics (like random, one-by-one etc)
+  * [ ] Add log with number of requests per site
 * [ ] Redo request if get non 2xx request
   * [ ] add flag to disable `redo`
 * [ ] Post
