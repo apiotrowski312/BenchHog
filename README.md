@@ -12,6 +12,7 @@
   * [x] number of total requests
   * [x] number of concurent requests
 * [ ] Support multiple endpoints within one bench test
+  * [ ] Add flag with multiple tactics (like random, one-by-one etc)
 * [ ] Redo request if get non 2xx request
   * [ ] add flag to disable `redo`
 * [ ] Post

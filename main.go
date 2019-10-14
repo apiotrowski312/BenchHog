@@ -18,13 +18,8 @@ func main() {
 		fmt.Println("Provide link to site")
 		os.Exit(1)
 	}
-	link := os.Args[1]
 
-	if !strings.HasPrefix(link, "http") {
-		link = "http://" + link
-
-	}
-	// Parse link (add http and e)
+	link := parseLink(os.Args[1])
 
 	// Flags
 	var numberOfRequests int
@@ -56,4 +51,11 @@ func main() {
 
 	results.PrintResults(measurment)
 
+}
+
+func parseLink(link string) string {
+	if !strings.HasPrefix(link, "http") {
+		return "http://" + link
+	}
+	return link
 }
