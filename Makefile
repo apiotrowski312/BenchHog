@@ -17,7 +17,7 @@ GOTEST=$(GOCMD) test ./... -cover
 # -----------------------------------------------------------------------------
 
 run: build ## Builds and run Benchhog.
-	$(BIN)/$(PROJECTNAME) wp.pl
+	$(BIN)/$(PROJECTNAME) wp.pl onet.pl https://google.com
 
 build: ## Builds Benchhog to bin directory.
 	$(GOBUILD) -o $(BIN)/$(PROJECTNAME) $(FILES)
