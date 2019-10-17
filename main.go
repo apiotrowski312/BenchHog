@@ -14,8 +14,6 @@ import (
 
 func main() {
 
-	//
-
 	if len(os.Args) < 2 {
 		fmt.Println("Provide link to site")
 		os.Exit(1)
@@ -39,7 +37,6 @@ func main() {
 	flag.Parse()
 
 	// Rest of code
-
 	finialMesurments := startBenchmark(numberOfRequests, ratio, links)
 
 	results.PrintResults(finialMesurments)
