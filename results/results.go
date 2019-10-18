@@ -16,6 +16,10 @@ func CreateMeasurment(waitTime time.Duration, success bool) Measurement {
 	return Measurement{waitTime: waitTime, success: success}
 }
 
+func (m Measurement) GetSuccess() bool {
+	return m.success
+}
+
 // PrintResults - print pretty and accurate metrics like mean time etc.
 func PrintResults(results chan Measurement) {
 	times, successes := toSlice(results)

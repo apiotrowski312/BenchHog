@@ -44,7 +44,6 @@ func main() {
 }
 
 func startBenchmark(numberOfRequests int, ratio int, links []string) chan results.Measurement {
-
 	var wg sync.WaitGroup
 	limitRatio := make(chan int, ratio)
 	measurment := make(chan results.Measurement, numberOfRequests)
@@ -54,8 +53,13 @@ func startBenchmark(numberOfRequests int, ratio int, links []string) chan result
 	wg.Add(numberOfRequests)
 	for i := 0; i < numberOfRequests; i++ {
 		limitRatio <- 1
-		go Get(links[rand.Intn(len(links))], limitRatio, &wg, measurment)
+		go func() {
+			defer wg.Done()
+			measurment <- Get(links[rand.Intn(len(links))])
+			<-limitRatio
+		}()
 	}
+
 	wg.Wait()
 	close(limitRatio)
 	close(measurment)
