@@ -5,6 +5,7 @@
 - improve release script
 - add flags for ratio and number of requests
 - add position argument with urls
+- add helper functions to parse links
 
 ### Changed
 - get.go to requests.go and refactor

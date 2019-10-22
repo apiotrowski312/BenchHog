@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
-	"strings"
 	"sync"
 	"time"
 
@@ -65,11 +64,4 @@ func startBenchmark(numberOfRequests int, ratio int, links []string) chan result
 	close(measurment)
 
 	return measurment
-}
-
-func parseLink(link string) string {
-	if !strings.HasPrefix(link, "http") {
-		return "http://" + link
-	}
-	return link
 }
