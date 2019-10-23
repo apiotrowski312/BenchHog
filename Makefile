@@ -16,8 +16,8 @@ GOTEST=$(GOCMD) test ./... -cover
 # General
 # -----------------------------------------------------------------------------
 
-run: build ## Builds and run Benchhog. E.g. usage: 'make LINKS="google.com wp.pl" run'
-	$(BIN)/$(PROJECTNAME) ${LINKS}
+run: build ## Builds and run Benchhog.
+	$(BIN)/$(PROJECTNAME) google.com
 
 build: ## Builds Benchhog to bin directory.
 	$(GOBUILD) -o $(BIN)/$(PROJECTNAME) $(FILES)

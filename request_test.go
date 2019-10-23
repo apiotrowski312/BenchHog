@@ -18,16 +18,16 @@ func TestGet(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want results.Measurement
+		want results.Result
 	}{
 		{
 			"Should succeed",
 			args{
 				url: "http://localhost:9696",
 			},
-			results.CreateMeasurment(
+			results.CreateResult(
 				time.Duration(0),
-				true,
+				200,
 			),
 		},
 		{
@@ -35,9 +35,9 @@ func TestGet(t *testing.T) {
 			args{
 				url: "http://localhost:1234",
 			},
-			results.CreateMeasurment(
+			results.CreateResult(
 				time.Duration(0),
-				false,
+				500,
 			),
 		},
 	}
@@ -50,8 +50,8 @@ func TestGet(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Get(tt.args.url); !reflect.DeepEqual(got.GetSuccess(), tt.want.GetSuccess()) {
-				t.Errorf("Get() = %v, want %v", got, tt.want)
+			if got := Get(tt.args.url); !reflect.DeepEqual(got.GetResponseStatus(), tt.want.GetResponseStatus()) {
+				t.Errorf("Get() = %v, want %v", got.GetResponseStatus(), tt.want.GetResponseStatus())
 			}
 		})
 	}
