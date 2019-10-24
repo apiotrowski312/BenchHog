@@ -9,6 +9,7 @@
 
 ### Changed
 - get.go to requests.go and refactor
+- refactor whole results package.
 
 ## 0.0.1 - 2019-10-04
 ### Added

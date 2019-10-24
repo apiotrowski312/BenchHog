@@ -8,17 +8,16 @@ import (
 )
 
 // Get - simple function to Get url and collect data
-func Get(url string) results.Measurement {
+func Get(url string) results.Result {
 	start := time.Now()
 	resp, err := http.Get(url)
 
 	if err != nil {
-		return results.CreateMeasurment(time.Since(start), false)
+		return results.CreateResult(time.Since(start), 500)
 	}
 
 	defer resp.Body.Close()
-	wasSuccess := resp.StatusCode >= 200 && resp.StatusCode <= 299
 
-	return results.CreateMeasurment(time.Since(start), wasSuccess)
+	return results.CreateResult(time.Since(start), resp.StatusCode)
 
 }
