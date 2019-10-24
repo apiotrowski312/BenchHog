@@ -57,7 +57,11 @@ func startBenchmark(numberOfRequests int, ratio int, links []string) chan result
 			results <- Get(links[rand.Intn(len(links))])
 			<-limitRatio
 		}()
+
+		showLoader(i, numberOfRequests)
 	}
+
+	fmt.Println()
 
 	wg.Wait()
 	close(limitRatio)
