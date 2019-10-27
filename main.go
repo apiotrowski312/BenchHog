@@ -46,8 +46,8 @@ func main() {
 
 func helpCommand() {
 	fmt.Printf("Available commands:\n")
-	fmt.Printf("help\twill show this help\n")
-	fmt.Printf("get\twill get things\n") // TODO: descriptions
+	fmt.Printf("help\tshow help\n")
+	fmt.Printf("get\t start benchmark with get request\n") // TODO: descriptions
 }
 
 func getBenchmarkCommand(details CommandDetails) {
