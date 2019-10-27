@@ -11,46 +11,64 @@ import (
 	"github.com/apiotrowski312/benchHog/results"
 )
 
+type CommandDetails struct {
+	requestType   string
+	ratio         int
+	numOfRequests int
+	links         []string
+}
+
 func main() {
 
-	if len(os.Args) < 2 {
-		fmt.Println("Provide link to site")
-		os.Exit(1)
-	}
+	// Flags
+	commandDetails := CommandDetails{}
 
-	links := make([]string, len(os.Args)-1)
-	for index, link := range os.Args[1:] {
+	flag.IntVar(&commandDetails.numOfRequests, "r", 100, "Provide number of requests")
+	flag.IntVar(&commandDetails.ratio, "ratio", 10, "Provide ratio")
+	flag.Parse()
+
+	links := make([]string, len(os.Args)-2)
+	for index, link := range os.Args[2:] {
 		links[index] = parseLink(link)
 	}
 
-	// Flags
-	var numberOfRequests int
-	var ratio int
+	commandDetails.links = links
 
-	description := "Provide number of requests"
-	flag.IntVar(&numberOfRequests, "request", 100, description)
-	flag.IntVar(&numberOfRequests, "r", 100, description+" (shorthand)")
-
-	description = "Provide ratio"
-	flag.IntVar(&ratio, "ratio", 10, description)
-	flag.Parse()
-
-	// Rest of code
-	finialMesurments := startBenchmark(numberOfRequests, ratio, links)
-
-	results.PrintResults(finialMesurments)
-
+	switch os.Args[1] {
+	case "help":
+		helpCommand()
+	case "get":
+		getBenchmarkCommand(commandDetails)
+	default:
+		helpCommand()
+	}
 }
 
-func startBenchmark(numberOfRequests int, ratio int, links []string) chan results.Result {
+func helpCommand() {
+	fmt.Printf("Available commands:\n")
+	fmt.Printf("help\twill show this help\n")
+	fmt.Printf("get\twill get things\n") // TODO: descriptions
+}
+
+func getBenchmarkCommand(details CommandDetails) {
+	details.requestType = "get"
+	finialMesurments := startBenchmark(details)
+
+	results.PrintResults(finialMesurments)
+}
+
+func startBenchmark(details CommandDetails) chan results.Result {
+
+	ratio, numOfRequests, links := details.ratio, details.numOfRequests, details.links
+
 	var wg sync.WaitGroup
 	limitRatio := make(chan int, ratio)
-	results := make(chan results.Result, numberOfRequests)
+	results := make(chan results.Result, numOfRequests)
 
 	rand.Seed(time.Now().Unix())
 
-	wg.Add(numberOfRequests)
-	for i := 0; i < numberOfRequests; i++ {
+	wg.Add(numOfRequests)
+	for i := 0; i < numOfRequests; i++ {
 		limitRatio <- 1
 		go func() {
 			defer wg.Done()
@@ -58,7 +76,7 @@ func startBenchmark(numberOfRequests int, ratio int, links []string) chan result
 			<-limitRatio
 		}()
 
-		showLoader(i, numberOfRequests)
+		showLoader(i, numOfRequests)
 	}
 
 	fmt.Println()

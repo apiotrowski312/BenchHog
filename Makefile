@@ -17,7 +17,7 @@ GOTEST=$(GOCMD) test ./... -cover
 # -----------------------------------------------------------------------------
 
 run: build ## Builds and run Benchhog.
-	$(BIN)/$(PROJECTNAME) google.com
+	$(BIN)/$(PROJECTNAME) get google.com
 
 build: ## Builds Benchhog to bin directory.
 	$(GOBUILD) -o $(BIN)/$(PROJECTNAME) $(FILES)
