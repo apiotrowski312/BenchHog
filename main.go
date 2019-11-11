@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"math/rand"
@@ -11,10 +12,11 @@ import (
 	"github.com/apiotrowski312/benchHog/results"
 )
 
+// CommandDetails - TODO
 type CommandDetails struct {
-	requestType   string
 	ratio         int
 	numOfRequests int
+	jsonString    string
 	links         []string
 }
 
@@ -24,21 +26,29 @@ func main() {
 	commandDetails := CommandDetails{}
 
 	flag.IntVar(&commandDetails.numOfRequests, "r", 100, "Provide number of requests")
+	flag.StringVar(&commandDetails.jsonString, "json", "", "Json for post request")
 	flag.IntVar(&commandDetails.ratio, "ratio", 10, "Provide ratio")
 	flag.Parse()
 
-	links := make([]string, len(os.Args)-2)
-	for index, link := range os.Args[2:] {
+	if len(flag.Args()) < 2 {
+		fmt.Println("Provide method and links")
+		os.Exit(1)
+	}
+
+	links := make([]string, len(flag.Args())-1)
+	for index, link := range flag.Args()[1:] {
 		links[index] = parseLink(link)
 	}
 
 	commandDetails.links = links
 
-	switch os.Args[1] {
+	switch flag.Args()[0] {
 	case "help":
 		helpCommand()
 	case "get":
 		getBenchmarkCommand(commandDetails)
+	case "post":
+		postBenchmarkCommand(commandDetails)
 	default:
 		helpCommand()
 	}
@@ -47,17 +57,34 @@ func main() {
 func helpCommand() {
 	fmt.Printf("Available commands:\n")
 	fmt.Printf("help\tshow help\n")
-	fmt.Printf("get\t start benchmark with get request\n") // TODO: descriptions
+	fmt.Printf("get\t start benchmark with get request\n")   // TODO: descriptions
+	fmt.Printf("post\t start benchmark with post request\n") // TODO: descriptions
 }
 
 func getBenchmarkCommand(details CommandDetails) {
-	details.requestType = "get"
-	finialMesurments := startBenchmark(details)
+
+	get := func(url string) results.Result {
+		return Get(url)
+	}
+
+	finialMesurments := startBenchmark(get, details)
 
 	results.PrintResults(finialMesurments)
 }
 
-func startBenchmark(details CommandDetails) chan results.Result {
+func postBenchmarkCommand(details CommandDetails) {
+	jsonString := []byte(details.jsonString)
+
+	post := func(url string) results.Result {
+		return Post(url, "application/json", bytes.NewBuffer(jsonString))
+	}
+
+	finialMesurments := startBenchmark(post, details)
+
+	results.PrintResults(finialMesurments)
+}
+
+func startBenchmark(request func(url string) results.Result, details CommandDetails) chan results.Result {
 
 	ratio, numOfRequests, links := details.ratio, details.numOfRequests, details.links
 
@@ -68,18 +95,17 @@ func startBenchmark(details CommandDetails) chan results.Result {
 	rand.Seed(time.Now().Unix())
 
 	wg.Add(numOfRequests)
+
 	for i := 0; i < numOfRequests; i++ {
 		limitRatio <- 1
 		go func() {
 			defer wg.Done()
-			results <- Get(links[rand.Intn(len(links))])
+			results <- request(links[rand.Intn(len(links))])
 			<-limitRatio
 		}()
 
 		showLoader(i, numOfRequests)
 	}
-
-	fmt.Println()
 
 	wg.Wait()
 	close(limitRatio)

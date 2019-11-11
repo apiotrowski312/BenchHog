@@ -96,7 +96,7 @@ func PrintResults(results chan Result) {
 
 	timeStats := summary.timeStats
 	statusCodes := summary.statusCodes
-
+	fmt.Printf("\n")
 	fmt.Println("Average time:\t", timeStats.averageResponseTime)
 	fmt.Println("Median time:\t", timeStats.medianResponseTime)
 	fmt.Println()
