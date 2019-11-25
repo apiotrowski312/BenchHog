@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"math/rand"
 	"os"
 	"sync"
@@ -17,6 +18,7 @@ type CommandDetails struct {
 	ratio         int
 	numOfRequests int
 	jsonString    string
+	jsonFile      string
 	links         []string
 }
 
@@ -26,7 +28,8 @@ func main() {
 	commandDetails := CommandDetails{}
 
 	flag.IntVar(&commandDetails.numOfRequests, "r", 100, "Provide number of requests")
-	flag.StringVar(&commandDetails.jsonString, "json", "", "Json for post request")
+	flag.StringVar(&commandDetails.jsonString, "body", "", "Json for post request")
+	flag.StringVar(&commandDetails.jsonFile, "bodyFile", "", "File (with json usually) for post request (higher priority than string)")
 	flag.IntVar(&commandDetails.ratio, "ratio", 10, "Provide ratio")
 	flag.Parse()
 
@@ -62,7 +65,6 @@ func helpCommand() {
 }
 
 func getBenchmarkCommand(details CommandDetails) {
-
 	get := func(url string) results.Result {
 		return Get(url)
 	}
@@ -73,10 +75,24 @@ func getBenchmarkCommand(details CommandDetails) {
 }
 
 func postBenchmarkCommand(details CommandDetails) {
-	jsonString := []byte(details.jsonString)
+
+	var jsonBytes []byte
+
+	fmt.Println(details.jsonFile)
+
+	if details.jsonFile != "" {
+		fileData, err := ioutil.ReadFile(details.jsonFile)
+
+		if err != nil {
+			panic(err)
+		}
+		jsonBytes = fileData
+	} else {
+		jsonBytes = []byte(details.jsonString)
+	}
 
 	post := func(url string) results.Result {
-		return Post(url, "application/json", bytes.NewBuffer(jsonString))
+		return Post(url, "application/json", bytes.NewBuffer(jsonBytes))
 	}
 
 	finialMesurments := startBenchmark(post, details)
