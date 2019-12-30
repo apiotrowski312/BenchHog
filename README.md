@@ -1,8 +1,6 @@
 # BenchHog
 
-[![GoDoc](https://godoc.org/github.com/apiotrowski312/BenchHog/lib?status.svg)](https://godoc.org/github.com/apiotrowski312/BenchHog/lib)
-
-[![GoDoc](https://godoc.org/github.com/apiotrowski312/BenchHog/results?status.svg)](https://godoc.org/github.com/apiotrowski312/BenchHog/results)
+[![GoDoc](https://godoc.org/github.com/apiotrowski312/BenchHog/lib?status.svg)](https://godoc.org/github.com/apiotrowski312/BenchHog/lib) [![GoDoc](https://godoc.org/github.com/apiotrowski312/BenchHog/results?status.svg)](https://godoc.org/github.com/apiotrowski312/BenchHog/results)
 
 ## app is under development, there is no stable version
 
@@ -28,7 +26,7 @@ Not available at the moment.
 
 At the moment, the only way to build and use BenchHog is by building it from source.
 
-Fortunately, it's pretty simple and straightforward. Clone repo with git clone XXX and call make build inside cloned repo. It will create binary inside bin catalog.
+Fortunately, it's pretty simple and straightforward. Clone repo with git clone git@github.com:apiotrowski312/BenchHog.git and call make build inside cloned repo. It will create binary inside bin catalog.
 
 ## Usage
 
