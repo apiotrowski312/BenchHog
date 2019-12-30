@@ -8,6 +8,7 @@
 - add helper functions to parse links
 - add loader when sending requsts
 - add help command
+- add post support, with json string or file option
 
 ### Changed
 - get.go to requests.go and refactor

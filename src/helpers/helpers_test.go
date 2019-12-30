@@ -1,4 +1,4 @@
-package main
+package helpers
 
 import (
 	"io/ioutil"
@@ -39,7 +39,7 @@ func Test_parseLink(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := parseLink(tt.args.link); got != tt.want {
+			if got := ParseLink(tt.args.link); got != tt.want {
 				t.Errorf("parseLink() = %v, want %v", got, tt.want)
 			}
 		})
@@ -80,7 +80,7 @@ func Test_showLoader(t *testing.T) {
 			r, w, _ := os.Pipe()
 			os.Stdout = w
 
-			showLoader(tt.args.currentNumber, tt.args.maxNumber)
+			ShowLoader(tt.args.currentNumber, tt.args.maxNumber)
 
 			w.Close()
 			out, _ := ioutil.ReadAll(r)

@@ -1,18 +1,18 @@
-package main
+package helpers
 
 import (
 	"fmt"
 	"strings"
 )
 
-func parseLink(link string) string {
+func ParseLink(link string) string {
 	if !strings.HasPrefix(link, "http") {
 		return "http://" + link
 	}
 	return link
 }
 
-func showLoader(currentNumber int, maxNumber int) {
+func ShowLoader(currentNumber int, maxNumber int) {
 	percentage := int(float64(currentNumber) / float64(maxNumber) * 100)
 
 	hashes := strings.Repeat("#", percentage/10)

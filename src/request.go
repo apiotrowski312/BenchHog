@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/apiotrowski312/benchHog/results"
+	"github.com/apiotrowski312/benchHog/src/results"
 )
 
 // Get - simple function to Get url and collect data

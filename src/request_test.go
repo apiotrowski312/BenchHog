@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/apiotrowski312/benchHog/results"
+	"github.com/apiotrowski312/benchHog/src/results"
 )
 
 func TestGet(t *testing.T) {

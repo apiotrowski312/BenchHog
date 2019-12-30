@@ -2,11 +2,11 @@
 PROJECTNAME := $(shell basename "$(PWD)")
 BASE := $(shell pwd)
 BIN := $(BASE)/bin
-FILES := *.go
+FILES := ./src/*.go
 
 GOCMD=go
 GOBUILD=$(GOCMD) build
-GOCLEAN=$(GOCMD) clean
+GOCLEAN=$(GOCMD) clean $(FILES)
 GOTEST=$(GOCMD) test ./... -cover
 
 .DEFAULT_GOAL := help
@@ -16,10 +16,10 @@ GOTEST=$(GOCMD) test ./... -cover
 # General
 # -----------------------------------------------------------------------------
 
-run-get: build ## Builds and run Benchhog.
+get: build ## Builds and run Benchhog with get requests.
 	$(BIN)/$(PROJECTNAME) get google.com
 
-run-post: build ## Builds and run Benchhog.
+post: build ## Builds and run Benchhog with post requests.
 	$(BIN)/$(PROJECTNAME) post google.com
 
 build: ## Builds Benchhog to bin directory.
