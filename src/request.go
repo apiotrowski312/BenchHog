@@ -17,7 +17,7 @@ func Get(url string) results.Result {
 	return request(get)
 }
 
-// Post - simple function to Get url and collect data
+// Post - simple function to Post url and collect data
 func Post(url string, byteType string, bytes io.Reader) results.Result {
 	post := func() (*http.Response, error) {
 		return http.Post(url, byteType, bytes)
