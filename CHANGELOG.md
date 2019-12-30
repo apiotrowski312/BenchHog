@@ -1,5 +1,5 @@
 
-## 0.0.2 - under development
+## 0.0.2 - 2019-12-30
 
 ### Added
 - improve release script
@@ -9,10 +9,12 @@
 - add loader when sending requsts
 - add help command
 - add post support, with json string or file option
+- improve tests
 
 ### Changed
 - get.go to requests.go and refactor
-- refactor whole results package.
+- refactor whole results package
+- refactor main catalog, change directories.
 
 ## 0.0.1 - 2019-10-04
 ### Added
